@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container" style="margin: 20px auto">
+
+        <h1 style="; text-align: center">Groupe : {{ group.name }}</h1>
+
+        {% for artist in artists %}
+            <div class="card" style="width: 350px; margin: 20px auto">
+                <h5 class="card-header">
+                    {{ artist.pseudo }}
+                </h5>
+                <div class="card-body">
+                    <div class="card-text">
+                        <ul style="list-style: none">
+                            <li>Prénom : {{ artist.firstName }}</li>
+                            <li>Nom de famille : {{ artist.lastName }}</li>
+                            <li>Description : {{ artist.description }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
