@@ -1,0 +1,8 @@
+encoders:
+  App\Entity\User:
+    algorithm: auto
+guard:
+  authenticators:
+    -App\Security\AppCustomAuthenticator
+logout:
+  path: app_logout

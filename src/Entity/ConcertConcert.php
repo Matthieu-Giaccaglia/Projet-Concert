@@ -22,47 +22,47 @@ class ConcertConcert
     /**
      * @ORM\Column(type="integer")
      */
-    private $nb_ticket;
+    private $nbTicket;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $datetime_begin;
+    private $datetimeBegin;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $datetime_end;
+    private $datetimeEnd;
 
     /**
      * @ORM\ManyToOne(targetEntity=ConcertGroup::class, inversedBy="concert_hall")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $concert_group;
+    private $concertGroup;
 
     /**
      * @ORM\ManyToOne(targetEntity=ConcertOrganizer::class, inversedBy="concertConcerts")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $concert_organizer;
+    private $concertOrganizer;
 
     /**
      * @ORM\ManyToMany(targetEntity=ConcertTicketOffice::class, inversedBy="concertConcerts")
      */
-    private $concert_ticketoffice;
+    private $concertTicketoffice;
 
     /**
      * @ORM\ManyToOne(targetEntity=ConcertHall::class, inversedBy="concertConcerts")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $concert_hall;
+    private $concertHall;
 
     /**
      * ConcertConcert constructor.
      */
     public function __construct()
     {
-        $this->concert_ticketoffice = new ArrayCollection();
+        $this->concertTicketoffice = new ArrayCollection();
     }
 
     /**
@@ -78,16 +78,16 @@ class ConcertConcert
      */
     public function getNbTicket(): ?int
     {
-        return $this->nb_ticket;
+        return $this->nbTicket;
     }
 
     /**
-     * @param int $nb_ticket
+     * @param int $nbTicket
      * @return $this
      */
-    public function setNbTicket(int $nb_ticket): self
+    public function setNbTicket(int $nbTicket): self
     {
-        $this->nb_ticket = $nb_ticket;
+        $this->nbTicket = $nbTicket;
 
         return $this;
     }
@@ -97,16 +97,16 @@ class ConcertConcert
      */
     public function getDatetimeBegin(): ?\DateTimeInterface
     {
-        return $this->datetime_begin;
+        return $this->datetimeBegin;
     }
 
     /**
-     * @param \DateTimeInterface $datetime_begin
+     * @param \DateTimeInterface $datetimeBegin
      * @return $this
      */
-    public function setDatetimeBegin(\DateTimeInterface $datetime_begin): self
+    public function setDatetimeBegin(\DateTimeInterface $datetimeBegin): self
     {
-        $this->datetime_begin = $datetime_begin;
+        $this->datetimeBegin = $datetimeBegin;
 
         return $this;
     }
@@ -116,16 +116,16 @@ class ConcertConcert
      */
     public function getDatetimeEnd(): ?\DateTimeInterface
     {
-        return $this->datetime_end;
+        return $this->datetimeEnd;
     }
 
     /**
-     * @param \DateTimeInterface $datetime_end
+     * @param \DateTimeInterface $datetimeEnd
      * @return $this
      */
-    public function setDatetimeEnd(\DateTimeInterface $datetime_end): self
+    public function setDatetimeEnd(\DateTimeInterface $datetimeEnd): self
     {
-        $this->datetime_end = $datetime_end;
+        $this->datetimeEnd = $datetimeEnd;
 
         return $this;
     }
@@ -135,16 +135,16 @@ class ConcertConcert
      */
     public function getConcertGroup(): ?ConcertGroup
     {
-        return $this->concert_group;
+        return $this->concertGroup;
     }
 
     /**
-     * @param ConcertGroup|null $concert_group
+     * @param ConcertGroup|null $concertGroup
      * @return $this
      */
-    public function setConcertGroup(?ConcertGroup $concert_group): self
+    public function setConcertGroup(?ConcertGroup $concertGroup): self
     {
-        $this->concert_group = $concert_group;
+        $this->concertGroup = $concertGroup;
 
         return $this;
     }
@@ -154,16 +154,16 @@ class ConcertConcert
      */
     public function getConcertOrganizer(): ?ConcertOrganizer
     {
-        return $this->concert_organizer;
+        return $this->concertOrganizer;
     }
 
     /**
-     * @param ConcertOrganizer|null $concert_organizer
+     * @param ConcertOrganizer|null $concertOrganizer
      * @return $this
      */
-    public function setConcertOrganizer(?ConcertOrganizer $concert_organizer): self
+    public function setConcertOrganizer(?ConcertOrganizer $concertOrganizer): self
     {
-        $this->concert_organizer = $concert_organizer;
+        $this->concertOrganizer = $concertOrganizer;
 
         return $this;
     }
@@ -173,7 +173,7 @@ class ConcertConcert
      */
     public function getConcertTicketoffice(): Collection
     {
-        return $this->concert_ticketoffice;
+        return $this->concertTicketoffice;
     }
 
     /**
@@ -182,8 +182,8 @@ class ConcertConcert
      */
     public function addConcertTicketoffice(ConcertTicketOffice $concertTicketoffice): self
     {
-        if (!$this->concert_ticketoffice->contains($concertTicketoffice)) {
-            $this->concert_ticketoffice[] = $concertTicketoffice;
+        if (!$this->concertTicketoffice->contains($concertTicketoffice)) {
+            $this->concertTicketoffice[] = $concertTicketoffice;
         }
 
         return $this;
@@ -195,7 +195,7 @@ class ConcertConcert
      */
     public function removeConcertTicketoffice(ConcertTicketOffice $concertTicketoffice): self
     {
-        $this->concert_ticketoffice->removeElement($concertTicketoffice);
+        $this->concertTicketoffice->removeElement($concertTicketoffice);
 
         return $this;
     }
@@ -205,16 +205,16 @@ class ConcertConcert
      */
     public function getConcertHall(): ?ConcertHall
     {
-        return $this->concert_hall;
+        return $this->concertHall;
     }
 
     /**
-     * @param ConcertHall|null $concert_hall
+     * @param ConcertHall|null $concertHall
      * @return $this
      */
-    public function setConcertHall(?ConcertHall $concert_hall): self
+    public function setConcertHall(?ConcertHall $concertHall): self
     {
-        $this->concert_hall = $concert_hall;
+        $this->concertHall = $concertHall;
 
         return $this;
     }

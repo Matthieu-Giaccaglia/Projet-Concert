@@ -1,12 +1,25 @@
 {% set url = 'https://webinfo.iutmontp.univ-montp2.fr/~giaccagliam/concertProject/public/' %}
 
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url }}">
-            Home
-        </a>
-        <a class="navbar-brand" href="{{ url }}groups">
-            Groupes
-        </a>
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <a class="navbar-brand" href="{{ path('concert') }}">
+        Home
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('concert_list') }}">Liste des concerts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('groups_list') }}">Les groupes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul>
     </div>
+
 </nav>

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Groupe</td>
+                    <td>Nombre de place</td>
+                    <td>Date</td>
+                    <td>Editer</td>
+                    <td>Supprimer</td>
+                </tr>
+            </thead>
+            <tbody>
+            {% for concert in concerts %}
+                <tr>
+                    <td>
+                        <a href="{{ path('groups_show', {id: concert.concertGroup.id}) }}">{{ concert.concertGroup.name }}</a>
+                    </td>
+                    <td>
+                        {{ concert.nbTicket }}
+                    </td>
+                    <td>
+                        {{ concert.dateTimeBegin | date('d-m-Y') }}
+                    </td>
+                    <td>
+                        <a href="{{ path('concert_edit', {id: concert.id}) }}" class="btn btn-primary">EDITER</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('concert_delete', {id: concert.id}) }}" class="btn btn-danger">SUPPRIMER</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+
+    </div>
+{% endblock %}
