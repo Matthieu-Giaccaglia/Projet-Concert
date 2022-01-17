@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+
+    <div style="margin: 50px auto; width: max-content">
+        <div class="card" style="width: 25rem;min-width: max-content">
+            <div class="card-body">
+                {{ form_start(form) }}
+
+                {% if app.user.id == user.id %}
+
+                    <h1 class="card-title">Modifier Votre Compte</h1>
+
+
+                    </div>
+
+                {% else %}
+
+                    <h1 class="card-title">Modifier Le Compte n° {{ user.id }}</h1>
+
+                {% endif %}
+
+
+                    <div class="mb-3">
+                        <label for="{{ form.roles.vars.id }}">Roles</label>
+                        {{ form_widget(form.roles, {
+                            'attr' : {
+                                'class' : 'form-control',
+                                'aria-label' : 'multiple select exemple'
+                            }
+                        }) }}
+                    </div>
+
+
+                <button class="btn btn-primary" type="submit">
+                    MODIFIER L'UTILISATEUR
+                </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

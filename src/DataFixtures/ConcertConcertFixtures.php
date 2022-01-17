@@ -12,7 +12,7 @@ class ConcertConcertFixtures extends Fixture implements DependentFixtureInterfac
     public function load(ObjectManager $manager): void
     {
         $concert = new ConcertConcert();
-        $concert->setConcertGroup($this->getReference(ConcertGroupFixtures::GROUP_REFERENCE));
+        $concert->setConcertGroup($this->getReference(ConcertGroupFixtures::GROUP_REFERENCE.'_IMAGINE_DRAGONS'));
         $concert->setConcertHall($this->getReference(ConcertHallFixtures::HALL_REFERENCE));
         $concert->setConcertOrganizer($this->getReference(ConcertOrganizerFixtures::ORGANIZER_REFERENCE));
         $concert->setDatetimeBegin(new \DateTime('2022-05-05 17:45:00'));

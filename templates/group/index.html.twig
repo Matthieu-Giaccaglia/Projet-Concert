@@ -2,23 +2,25 @@
 
 {% block body %}
 
-    <div class="container">
+    <div class="title">
+        <h1>Liste des groupes</h1>
+    </div>
 
+    <div class="container">
+        <div class="row">
         {% for group in groups %}
-        <a class="nav-link" href="https://webinfo.iutmontp.univ-montp2.fr/~giaccagliam/concertProject/public/groups/{{ group.id }}">
-        <div class="card" style="width: 250px">
-            <h5 class="card-header">
-                {{ group.name }}
-            </h5>
-            <div class="card-body">
-                <div class="card-text">
-                    {{ group.description }}
+            <div class="col-6" style="margin: auto">
+                <div class="card" style="width: 18rem; margin: auto">
+                    <img src="{{ asset('img/groups/' ~ group.name|replace({' ':'_'})|lower ~ '/' ~ group.imgName) }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ group.name }}</h5>
+                        <p class="card-text">{{ group.description }}</p>
+                        <a href="{{ path('groups_show', {id: group.id}) }}" class="btn btn-primary">En Savoir Plus..</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        </a>
         {% endfor %}
-
+        </div>
     </div>
 
 {% endblock %}

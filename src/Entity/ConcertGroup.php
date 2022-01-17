@@ -40,6 +40,11 @@ class ConcertGroup
     private $concertConcerts;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imgName;
+
+    /**
      * ConcertGroup constructor.
      */
     public function __construct()
@@ -161,6 +166,18 @@ class ConcertGroup
                 $concertConcert->setConcertGroup(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImgName(): ?string
+    {
+        return $this->imgName;
+    }
+
+    public function setImgName(?string $imgName): self
+    {
+        $this->imgName = $imgName;
 
         return $this;
     }

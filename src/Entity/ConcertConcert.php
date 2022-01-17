@@ -58,6 +58,11 @@ class ConcertConcert
     private $concertHall;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imgName;
+
+    /**
      * ConcertConcert constructor.
      */
     public function __construct()
@@ -215,6 +220,18 @@ class ConcertConcert
     public function setConcertHall(?ConcertHall $concertHall): self
     {
         $this->concertHall = $concertHall;
+
+        return $this;
+    }
+
+    public function getImgName(): ?string
+    {
+        return $this->imgName;
+    }
+
+    public function setImgName(?string $imgName): self
+    {
+        $this->imgName = $imgName;
 
         return $this;
     }

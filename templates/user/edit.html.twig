@@ -3,11 +3,50 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    <div style="margin: 50px auto; width: max-content">
+        <div class="card" style="width: 25rem;min-width: max-content">
+            <div class="card-body">
+                {{ form_start(form) }}
 
-    <a href="{{ path('user_index') }}">back to list</a>
 
-    {{ include('user/_delete_form.html.twig') }}
+                <h1 class="card-title">Modifier Votre Compte</h1>
+
+                <div class="mb-3">
+                    <label for="{{ form.firstName.vars.id }}">Prénom</label>
+                    {{ form_widget(form.firstName, {
+                        'attr' : {
+                            'class' : 'form-control'
+                        }
+                    }) }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.lastName.vars.id }}">Nom de famille</label>
+                    {{ form_widget(form.lastName, {
+                        'attr' : {
+                            'class' : 'form-control'
+                        }
+                    }) }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.email.vars.id }}">Email</label>
+                    {{ form_widget(form.email, {
+                        'attr': {
+                            'class': 'form-control'
+                        }})
+                    }}
+
+                </div>
+
+
+
+                <button class="btn btn-primary" type="submit">
+                    MODIFIER
+                </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}

@@ -22,12 +22,12 @@ class ConcertArtist
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $first_name;
+    private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $last_name;
+    private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -44,6 +44,11 @@ class ConcertArtist
      */
     private $concertGroups;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imgName;
+
     public function __construct()
     {
         $this->concertGroups = new ArrayCollection();
@@ -56,24 +61,24 @@ class ConcertArtist
 
     public function getFirstName(): ?string
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
-    public function setFirstName(string $first_name): self
+    public function setFirstName(string $firstName): self
     {
-        $this->first_name = $first_name;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     public function getLastName(): ?string
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
-    public function setLastName(string $last_name): self
+    public function setLastName(string $lastName): self
     {
-        $this->last_name = $last_name;
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -125,6 +130,18 @@ class ConcertArtist
         if ($this->concertGroups->removeElement($concertGroup)) {
             $concertGroup->removeConcertArtist($this);
         }
+
+        return $this;
+    }
+
+    public function getImgName(): ?string
+    {
+        return $this->imgName;
+    }
+
+    public function setImgName(?string $imgName): self
+    {
+        $this->imgName = $imgName;
 
         return $this;
     }

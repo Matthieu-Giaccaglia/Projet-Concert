@@ -2,27 +2,49 @@
 
 {% block body %}
 
-    <div class="container" style="margin: 20px auto">
+    <div class="group-container" style="position: relative">
+        
+        <img style="position: fixed;z-index: -1" src="{{ asset('img/groups/' ~ group.name|replace({' ':'_'})|lower ~ '/' ~ group.imgName) }}" alt="">
 
-        <h1 style="; text-align: center">Groupe : {{ group.name }}</h1>
+        <div class="group-separator"></div>
 
-        {% for artist in artists %}
-            <div class="card" style="width: 350px; margin: 20px auto">
-                <h5 class="card-header">
-                    {{ artist.pseudo }}
-                </h5>
-                <div class="card-body">
-                    <div class="card-text">
-                        <ul style="list-style: none">
-                            <li>Prénom : {{ artist.firstName }}</li>
-                            <li>Nom de famille : {{ artist.lastName }}</li>
-                            <li>Description : {{ artist.description }}</li>
-                        </ul>
+        <div class="group-title">
+            <h1> {{ group.name }}</h1>
+        </div>
+
+        <div class="group-desc mt-3">
+            <p> {{ group.description }}</p>
+        </div>
+        
+
+        <div class="container mt-3">
+            <div class="row">
+
+                {% for artist in artists %}
+                    <div class="col-6" style="margin: auto">
+                        <div class="card mb-3" style="max-width: 540px;margin: auto">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img style="width: 180px; height: 240px;" src="{{ asset('img/groups/' ~ group.name|replace({' ':'_'})|lower ~ '/' ~ artist.imgName) }}" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ artist.firstName ~ artist.lastName }}</h5>
+                                        <p class="card-text">{{ artist.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
+
+        <div class="group-separator-2"></div>
 
     </div>
+
+
 
 {% endblock %}
