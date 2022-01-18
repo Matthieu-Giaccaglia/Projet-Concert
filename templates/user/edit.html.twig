@@ -7,11 +7,11 @@
     <div style="margin: 50px auto; width: max-content">
         <div class="card" style="width: 25rem;min-width: max-content">
             <div class="card-body">
-                {{ form_start(form) }}
+
 
 
                 <h1 class="card-title">Modifier Votre Compte</h1>
-
+                {{ form_start(form) }}
                 <div class="mb-3">
                     <label for="{{ form.firstName.vars.id }}">Prénom</label>
                     {{ form_widget(form.firstName, {

@@ -24,10 +24,11 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                default_target_path: concert_list
             logout:
                 path: app_logout
                 # where to redirect after logout
-                # target: app_any_route
+                target: concert_list
             entry_point: App\Security\AppCustomAuthenticator
 
             # activate different ways to authenticate

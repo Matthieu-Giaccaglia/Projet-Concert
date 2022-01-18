@@ -14,13 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ConcertController extends AbstractController
 {
-    /**
-     * @Route("/", name="concert")
-     */
-    public function indexAction(): Response
-    {
-        return $this->redirectToRoute('concert_list');
-    }
+
 
     /**
      * @Route("/concert/list", name="concert_list")
