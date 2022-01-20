@@ -31,7 +31,7 @@ class ConcertArtist
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=ConcertGroup::class, mappedBy="concert_artist")
+     * @ORM\ManyToMany(targetEntity=ConcertGroup::class, mappedBy="concertArtist")
      */
     private $concertGroups;
 

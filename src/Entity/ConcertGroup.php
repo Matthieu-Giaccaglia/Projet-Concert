@@ -35,7 +35,7 @@ class ConcertGroup
     private $concertArtist;
 
     /**
-     * @ORM\OneToMany(targetEntity=ConcertConcert::class, mappedBy="concert_group", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ConcertConcert::class, mappedBy="concertGroup", orphanRemoval=true)
      */
     private $concertConcerts;
 

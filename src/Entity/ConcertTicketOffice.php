@@ -25,7 +25,7 @@ class ConcertTicketOffice
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=ConcertConcert::class, mappedBy="concert_ticketoffice")
+     * @ORM\ManyToMany(targetEntity=ConcertConcert::class, mappedBy="concertTicketoffice")
      */
     private $concertConcerts;
 

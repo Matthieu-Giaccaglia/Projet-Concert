@@ -30,7 +30,7 @@ class ConcertOrganizer
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity=ConcertConcert::class, mappedBy="concert_organizer", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ConcertConcert::class, mappedBy="concertOrganizer", orphanRemoval=true)
      */
     private $concertConcerts;
 

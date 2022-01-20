@@ -12,6 +12,7 @@
                 <th>Nom</th>
                 <th>Description</th>
                 <th>ImgName</th>
+                <th>Image</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,9 @@
                 <td>{{ concert_artist.name }}</td>
                 <td>{{ concert_artist.description }}</td>
                 <td>{{ concert_artist.imgName }}</td>
+                <td style="width: max-content">
+                    <img style="width: 60px; height: 80px;" src="{{ asset('img/artists/' ~ concert_artist.imgName) }}" class="img-fluid rounded-start" alt="...">
+                </td>
                 <td>
                     <a href="{{ path('artist_show', {'id': concert_artist.id}) }}">show</a>
                     <a href="{{ path('artist_edit', {'id': concert_artist.id}) }}">edit</a>

@@ -16,6 +16,18 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('groups_list') }}">Les groupes</a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    ADMIN
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{{ path('concert_list') }}">Panel concert</a></li>
+                    <li><a class="dropdown-item" href="{{ path('groups_list') }}">Panel groupe</a></li>
+                    <li><a class="dropdown-item" href="{{ path('artist_index') }}">Panel artiste</a></li>
+                </ul>
+            </li>
+            {% endif %}
         </ul>
 
     </div>
