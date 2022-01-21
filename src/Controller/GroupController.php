@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ConcertConcert;
 use App\Entity\ConcertGroup;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,6 +40,7 @@ class GroupController extends AbstractController
     public function groupAction(ManagerRegistry $doctrine, int $id): Response
     {
         $group = $doctrine->getRepository(ConcertGroup::class)->find($id);
+        $concerts = $doctrine->getRepository(ConcertConcert::class)->getNextGroupConcert($id);
 
         if(!$group){
             throw $this->createNotFoundException(
@@ -51,7 +53,8 @@ class GroupController extends AbstractController
         return $this->render('group/group.html.twig', [
             'controller_name' => 'GroupController',
             'group' => $group,
-            'artists' => $artists
+            'artists' => $artists,
+            'concerts' => $concerts
         ]);
     }
 }

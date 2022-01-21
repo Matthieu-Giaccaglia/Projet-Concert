@@ -15,10 +15,15 @@ class ConcertTicketOfficeFixtures extends Fixture
     {
         $ticketOffice = new ConcertTicketOffice();
         $ticketOffice->setName('Fnac');
-
+        $this->addReference(self::TICKET_OFFICE_REFERENCE . '_FNAC', $ticketOffice);
         $manager->persist($ticketOffice);
+
+        $ticketOffice = new ConcertTicketOffice();
+        $ticketOffice->setName('Carrefour');
+        $this->addReference(self::TICKET_OFFICE_REFERENCE . '_CARREFOUR', $ticketOffice);
+        $manager->persist($ticketOffice);
+
         $manager->flush();
 
-        $this->addReference(self::TICKET_OFFICE_REFERENCE, $ticketOffice);
     }
 }

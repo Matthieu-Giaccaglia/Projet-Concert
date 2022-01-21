@@ -33,7 +33,6 @@ class UserController extends AbstractController
 
     /**
      * @Route("/new", name="user_new", methods={"GET", "POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function new(Request $request,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {

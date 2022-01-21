@@ -15,10 +15,17 @@ class ConcertHallFixtures extends Fixture
     {
         $hall = new ConcertHall();
         $hall->setName('Salle B');
-
         $manager->persist($hall);
+        $this->addReference(self::HALL_REFERENCE  . '_SALLE_B', $hall);
+
+
+        $hall = new ConcertHall();
+        $hall->setName('Salle A');
+        $manager->persist($hall);
+        $this->addReference(self::HALL_REFERENCE  . '_SALLE_A', $hall);
+
+
         $manager->flush();
 
-        $this->addReference(self::HALL_REFERENCE, $hall);
     }
 }

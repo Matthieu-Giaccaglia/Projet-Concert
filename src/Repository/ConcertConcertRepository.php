@@ -19,6 +19,43 @@ class ConcertConcertRepository extends ServiceEntityRepository
         parent::__construct($registry, ConcertConcert::class);
     }
 
+    /**
+     * Get the next concert of specific group.
+     *
+     * @param string|int $idGroup id of the group.
+     * @return ConcertConcert[] Returns an array of ConcertConcert objects
+     */
+    public function getNextGroupConcert($idGroup): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.concertGroup = :val')
+            ->andWhere('c.datetimeBegin > :dateBegin')
+            ->setParameter('val', $idGroup)
+            ->setParameter('dateBegin', date('Y-m-d h:i:s'))
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * Get the next concert of specific group.
+     *
+     * @return ConcertConcert[] Returns an array of ConcertConcert objects
+     */
+    public function getNextConcert(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.datetimeBegin > :dateBegin')
+            ->setParameter('dateBegin', date('Y-m-d h:i:s'))
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return ConcertConcert[] Returns an array of ConcertConcert objects
     //  */

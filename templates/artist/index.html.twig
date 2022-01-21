@@ -3,41 +3,42 @@
 {% block title %}ConcertArtist index{% endblock %}
 
 {% block body %}
-    <h1>ConcertArtist index</h1>
+    <div class="title">
+        <h1>Liste des artistes</h1>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>ImgName</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for concert_artist in concert_artists %}
-            <tr>
-                <td>{{ concert_artist.id }}</td>
-                <td>{{ concert_artist.name }}</td>
-                <td>{{ concert_artist.description }}</td>
-                <td>{{ concert_artist.imgName }}</td>
-                <td style="width: max-content">
-                    <img style="width: 60px; height: 80px;" src="{{ asset('img/artists/' ~ concert_artist.imgName) }}" class="img-fluid rounded-start" alt="...">
-                </td>
-                <td>
-                    <a href="{{ path('artist_show', {'id': concert_artist.id}) }}">show</a>
-                    <a href="{{ path('artist_edit', {'id': concert_artist.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container mt-3">
+        <div class="row">
 
-    <a href="{{ path('artist_new') }}">Create new</a>
+            {% for artist in concert_artists %}
+                <div class="col-6" style="margin: auto">
+                    <div class="card mb-3" style="max-width: 540px;margin: auto">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img style="width: 180px; height: 240px;" src="{{ asset('img/artists/' ~ artist.imgName) }}" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="{{ path('artist_show', {id: artist.id}) }}">{{ artist.name }}</a></h5>
+                                    <p class="card-text">{{ artist.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <div class="card-footer flex-row" style="display: flex">
+                                <form method="post" action="{{ path('artist_delete', {'id': artist.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artist.id) }}">
+                                    <button type="submit" class="btn link-danger">SUPPRIMER</button>
+                                </form>
+                                <a href="{{ path('artist_edit', {'id': artist.id}) }}" class="btn btn-primary" style="margin-left: auto">EDITER</a>
+                            </div>
+
+                        {% endif %}
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}

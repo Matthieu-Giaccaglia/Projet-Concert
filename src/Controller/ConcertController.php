@@ -17,18 +17,28 @@ class ConcertController extends AbstractController
 
 
     /**
+     * @param ManagerRegistry $managerRegistry
+     * @return Response
+     *
+     * @Route("/", name="concert_index")
+     */
+    public function indexAction(ManagerRegistry  $managerRegistry): Response
+    {
+        $concerts = $managerRegistry->getRepository(ConcertConcert::class)->getNextConcert();
+
+        return $this->render('concert/index.html.twig',[
+            'concerts' => $concerts
+        ]);
+    }
+
+
+    /**
      * @Route("/concert/list", name="concert_list")
      */
     public function listAction(ManagerRegistry $managerRegistry): Response
     {
 
         $concerts = $managerRegistry->getRepository(ConcertConcert::class)->findAll();
-
-        if(!$concerts){
-            throw $this->createNotFoundException(
-                'Aucun concert trouvé !'
-            );
-        }
 
         return $this->render('concert/list.html.twig', [
             'concerts' => $concerts

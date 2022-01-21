@@ -13,13 +13,22 @@ class ConcertOrganizerFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+
         $organizer = new ConcertOrganizer();
         $organizer->setName('Fnac');
         $organizer->setEmail('contact@fnac.fr');
-
         $manager->persist($organizer);
+        $this->addReference(self::ORGANIZER_REFERENCE . '_FNAC', $organizer);
+
+        $organizer = new ConcertOrganizer();
+        $organizer->setName('NRJ Music');
+        $organizer->setEmail('contact@nrj-music.fr');
+        $this->addReference(self::ORGANIZER_REFERENCE . '_NRJ', $organizer);
+        $manager->persist($organizer);
+
+
         $manager->flush();
 
-        $this->addReference(self::ORGANIZER_REFERENCE, $organizer);
+
     }
 }
