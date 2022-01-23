@@ -9,20 +9,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('concert_list') }}">Liste des concerts</a>
+                <a class="nav-link" href="{{ path('concert_list') }}">Les concerts</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('groups_list') }}">Les groupes</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('artist_index') }}">Les artistes</a>
+            </li>
             {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    ADMIN
+                    Admin
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{{ path('concert_list') }}">Panel concert</a></li>
-                    <li><a class="dropdown-item" href="{{ path('groups_list') }}">Panel groupe</a></li>
-                    <li><a class="dropdown-item" href="{{ path('artist_index') }}">Panel artiste</a></li>
+                    <li><a class="dropdown-item" href="{{ path('concert_new') }}">Créer un concert</a></li>
+                    <li><a class="dropdown-item" href="{{ path('group_new') }}">Créer un groupe</a></li>
+                    <li><a class="dropdown-item" href="{{ path('artist_new') }}">Créer un artiste</a></li>
                 </ul>
             </li>
             {% endif %}

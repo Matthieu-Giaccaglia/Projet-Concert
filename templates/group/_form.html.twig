@@ -1,0 +1,45 @@
+{{ form_start(form) }}
+
+
+<div class="mb-3">
+    <label for="{{ form.name.vars.id }}">Nom</label>
+    {{ form_widget(form.name, {
+        'attr': {
+            'class': 'form-control'
+        }})
+    }}
+
+</div>
+<div class="mb-3">
+    <label for="{{ form.description.vars.id }}">Description</label>
+    {{ form_widget(form.description, {
+        'attr' : {
+            'class' : 'form-control'
+        }
+    }) }}
+</div>
+
+
+<div class="mb-3">
+    <label for="{{ form.concertArtists.vars.id }}">Artists</label>
+    {{ form_widget(form.concertArtists, {
+        'attr' : {
+            'class' : 'form-control',
+            'aria-label' : 'multiple select exemple'
+        }
+    }) }}
+</div>
+
+
+<div class="mb-3">
+    <label for="{{ form.file.vars.id }}" id="filelabel" class="form-label">Joindre une image</label>
+    {{ form_widget(form.file, { 'attr' : {'class': "form-control"} }) }}
+    <i class="form-text">(JPG, PNG, JPEG)</i>
+</div>
+
+
+
+<button class="btn btn-primary" type="submit">
+    CRÉER LE GROUPE
+</button>
+{{ form_end(form) }}

@@ -2,101 +2,90 @@
 
 {% block body %}
 
-    <div class="group-container bg-dark" style="position: relative; z-index: -2">
-        
-        <img style="position: fixed;z-index: -1; max-width: 100vw" src="{{ asset('img/groups/' ~ group.imgName) }}" alt="">
+    <div class="group-container bg-dark" style="position: relative; z-index: 0">
+
+        <img style="position: fixed; max-width: 100vw" src="{{ asset('img/groups/' ~ group.imgName) }}" alt="">
 
         <div class="group-separator"></div>
 
-        <div class="group-desc">
-            <div class="">
-                <h1>{{ group.name }}</h1>
-            </div>
+        <div style="z-index: 1; position: relative;">
+            <div class="group-desc">
+                <div class="">
+                    <h1>{{ group.name }}</h1>
+                </div>
 
-            <div class="mt-3" style="text-align: justify">
-                <p>{{ group.description }}</p>
-            </div>
-        </div>
-
-        <div class="group-separator-2"></div>
-
-
-        <div class="group-desc">
-            <div class="mt-2">
-                <h1>Les Membres</h1>
-            </div>
-
-            <div class="mt-5">
-                <div class="container mt-3">
-                    <div class="row">
-
-                        {% for artist in artists %}
-                            <div class="col-6" style="margin: auto">
-                                <div class="card mb-3" style="max-width: 540px;margin: auto">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img style="width: 180px; height: 240px;" src="{{ asset('img/artists/' ~ artist.imgName) }}" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title"><a href="{{ path('artist_show', {id: artist.id}) }}">{{ artist.name }}</a></h5>
-                                                <p class="card-text">{{ artist.description }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        {% endfor %}
-                    </div>
+                <div class="mt-3" style="text-align: justify">
+                    <p>{{ group.description }}</p>
                 </div>
             </div>
-        </div>
 
-        <div class="group-separator-2"></div>
+            <div class="group-separator-2"></div>
 
 
-        <div class="group-desc">
-            <div class="mt-2">
-                <h1>Les Prochains Concerts</h1>
-            </div>
+            <div class="group-desc">
+                <div class="mt-2">
+                    <h1>Les Membres</h1>
+                </div>
 
-            <div class="mt-5">
-                <div class="container mt-3">
-                    <div class="row">
+                <div class="mt-5">
+                    <div class="container mt-3">
+                        <div class="row">
 
-                        {% if concerts is empty %}
-                            <p>Aucun concert prochainement, n'hésitez pas à revenir de temps en temps !</p>
-                        {% endif %}
-
-                        {% for concert in concerts %}
+                            {% for artist in artists %}
                             <div class="col-6" style="margin: auto">
-                                <div class="card mb-3" style="max-width: 540px;margin: auto">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img style="width: 180px; height: 240px;" src="{{ asset('img/artists/' ~ concert.imgName) }}" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <p class="card-text">Début : {{ concert.datetimeBegin | date('d-m-Y à h-i') }}</p>
-                                                <p class="card-text">Fin : {{ concert.datetimeEnd | date('d-m-Y à h-i') }}</p>
-                                                <p class="card-text">Salle : {{ concert.concertHall.name }}</p>
-                                                <p class="card-text">Places : {{ concert.nbTicket }}</p>
-                                                <p class="card-text">Organisateur : {{ concert.concertOrganizer.name }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                {% include('artist/_card.html.twig') %}
                             </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <div class="group-separator-2"></div>
+
+
+            <div class="group-desc">
+                <div class="mt-2">
+                    <h1>Les Prochains Concerts</h1>
+                </div>
+
+                <div class="mt-5">
+                    <div class="container mt-3">
+                        <div class="row">
+
+                            {% if concerts is empty %}
+                                <p>Aucun concert prochainement, n'hésitez pas à revenir de temps en temps !</p>
+                            {% endif %}
+
+                            {% for concert in concerts %}
+                                <div class="col-6" style="margin: auto">
+                                    <div class="card mb-3" style="max-width: 540px;margin: auto">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img style="width: 180px; height: 240px;" src="{{ asset('img/artists/' ~ concert.imgName) }}" class="img-fluid rounded-start" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <p class="card-text">Début : {{ concert.datetimeBegin | date('d-m-Y à h-i') }}</p>
+                                                    <p class="card-text">Fin : {{ concert.datetimeEnd | date('d-m-Y à h-i') }}</p>
+                                                    <p class="card-text">Salle : {{ concert.concertHall.name }}</p>
+                                                    <p class="card-text">Places : {{ concert.nbTicket }}</p>
+                                                    <p class="card-text">Organisateur : {{ concert.concertOrganizer.name }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
-        
 
 
 

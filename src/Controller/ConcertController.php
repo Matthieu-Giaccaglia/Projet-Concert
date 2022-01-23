@@ -69,7 +69,7 @@ class ConcertController extends AbstractController
      *
      * @param Request $request
      * @return Response
-     * @Route("/concert/create", name="concert_create")
+     * @Route("/concert/new", name="concert_new")
      */
     public function createConcert(Request $request): Response
     {

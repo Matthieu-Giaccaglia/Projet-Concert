@@ -1,0 +1,68 @@
+{{ form_start(form) }}
+
+
+<div class="mb-3">
+    <label for="{{ form.concertGroup.vars.id }}">Groupes</label>
+    {{ form_widget(form.concertGroup, {
+        'attr' : {
+            'class' : 'form-control',
+            'aria-label' : 'select'
+        }
+    }) }}
+</div>
+
+<div class="mb-3">
+    <label for="{{ form.concertHall.vars.id }}">Salle</label>
+    {{ form_widget(form.concertHall, {
+        'attr' : {
+            'class' : 'form-control',
+            'aria-label' : 'select'
+        }
+    }) }}
+</div>
+
+<div class="mb-3">
+    {{ form_row(form.datetimeBegin) }}
+</div>
+
+<div class="mb-3">
+    {{ form_row(form.datetimeEnd) }}
+</div>
+
+
+<div class="mb-3">
+    <label for="{{ form.nbTicket.vars.id }}">Nombre de ticket</label>
+    {{ form_widget(form.nbTicket, {
+        'attr' : {
+            'class' : 'form-control'
+        }
+    }) }}
+</div>
+
+
+<div class="mb-3">
+    <label for="{{ form.concertOrganizer.vars.id }}">Organisateur</label>
+    {{ form_widget(form.concertOrganizer, {
+        'attr' : {
+            'class' : 'form-control',
+            'aria-label' : 'multiple select exemple'
+        }
+    }) }}
+</div>
+
+
+<div class="mb-3">
+    <label for="{{ form.concertTicketoffice.vars.id }}">Billeterie</label>
+    {{ form_widget(form.concertTicketoffice, {
+        'attr' : {
+            'class' : 'form-control',
+            'aria-label' : 'multiple select exemple'
+        }
+    }) }}
+</div>
+
+
+<button class="btn btn-primary" type="submit">
+    {{ submit_label }}
+</button>
+{{ form_end(form) }}

@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
+{% block title %}Éditer un Concert{% endblock %}
+
 {% block body %}
-    <div class="card">
-        <div class="card-header">
-            Création d'un concert
-        </div>
-        <div class="card-body">
-            {{ form(form) }}
+    <div style="margin: 50px auto; width: max-content">
+        <div class="card" style="width: 25rem;min-width: max-content">
+            <div class="card-body">
+                <h1 class="card-title">Éditer un Concert</h1>
+
+                {{ include('concert/_form.html.twig', {'submit_label': 'ÉDITER'}) }}
+            </div>
         </div>
     </div>
+
+
+
+    <a href="{{ path('concert_list') }}">back to list</a>
 {% endblock %}

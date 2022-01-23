@@ -1,41 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}ConcertArtist index{% endblock %}
+{% block title %}Les Artistes{% endblock %}
 
 {% block body %}
     <div class="title">
-        <h1>Liste des artistes</h1>
+        <h1>Les artistes</h1>
     </div>
 
     <div class="container mt-3">
-        <div class="row">
+        <div class="card-group">
 
-            {% for artist in concert_artists %}
+            {% for artist in artists %}
                 <div class="col-6" style="margin: auto">
-                    <div class="card mb-3" style="max-width: 540px;margin: auto">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img style="width: 180px; height: 240px;" src="{{ asset('img/artists/' ~ artist.imgName) }}" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="{{ path('artist_show', {id: artist.id}) }}">{{ artist.name }}</a></h5>
-                                    <p class="card-text">{{ artist.description }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
-                            <div class="card-footer flex-row" style="display: flex">
-                                <form method="post" action="{{ path('artist_delete', {'id': artist.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artist.id) }}">
-                                    <button type="submit" class="btn link-danger">SUPPRIMER</button>
-                                </form>
-                                <a href="{{ path('artist_edit', {'id': artist.id}) }}" class="btn btn-primary" style="margin-left: auto">EDITER</a>
-                            </div>
-
-                        {% endif %}
-                    </div>
-
+                    {% include('artist/_card.html.twig') %}
                 </div>
             {% endfor %}
         </div>

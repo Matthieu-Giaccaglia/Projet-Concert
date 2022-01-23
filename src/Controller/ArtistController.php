@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\ConcertArtist;
 use App\Form\ConcertArtistType;
-use App\Repository\ConcertArtistRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,8 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArtistController extends AbstractController
 {
     /**
-     * @Route("/list", name="artist_index", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @Route("/", name="artist_index", methods={"GET"})
      */
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -34,19 +32,10 @@ class ArtistController extends AbstractController
 
 
         return $this->render('artist/index.html.twig', [
-            'concert_artists' => $artists,
+            'artists' => $artists,
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="artist_show", methods={"GET"})
-     */
-    public function show(ConcertArtist $concertArtist): Response
-    {
-        return $this->render('artist/show.html.twig', [
-            'concert_artist' => $concertArtist,
-        ]);
-    }
 
     /**
      * @Route("/new", name="artist_new", methods={"GET", "POST"})
@@ -89,13 +78,21 @@ class ArtistController extends AbstractController
     }
 
     /**
+     * @Route("/{id}", name="artist_show", methods={"GET"})
+     */
+    public function show(ConcertArtist $concertArtist): Response
+    {
+        return $this->render('artist/show.html.twig', [
+            'artist' => $concertArtist,
+        ]);
+    }
+
+    /**
      * @Route("/edit/{id}", name="artist_edit", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function edit(ConcertArtist $concertArtist, Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
-
-        $groups = $concertArtist->getConcertGroups();
 
         $form = $this->createForm(ConcertArtistType::class, $concertArtist);
         $form->handleRequest($request);
@@ -132,12 +129,13 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="artist_delete", methods={"POST"})
+     * @Route("/delete/{id}", name="artist_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, ConcertArtist $concertArtist, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$concertArtist->getId(), $request->request->get('_token'))) {
+            unlink('/img/artists/' . $concertArtist->getImgName());
             $entityManager->remove($concertArtist);
             $entityManager->flush();
         }

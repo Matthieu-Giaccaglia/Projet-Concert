@@ -9,6 +9,7 @@ use App\Entity\ConcertOrganizer;
 use App\Entity\ConcertTicketOffice;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -22,13 +23,14 @@ class ConcertConcertType extends AbstractType
         $builder
             ->add('nbTicket', NumberType::class,[
                 'attr' => ['min' => 1],
-                'label' => 'Nombre de ticket'
             ])
             ->add('datetimeBegin', DateTimeType::class, [
-                'label' => 'Date et Heure du début'
+                'label' => 'Date et Heure du début',
+                'widget' => 'single_text',
             ])
             ->add('datetimeEnd', DateTimeType::class, [
-                'label' => 'Date et Heure de fin'
+                'label' => 'Date et Heure de fin',
+                'widget' => 'single_text'
             ])
             ->add('concertGroup', EntityType::class, [
                 'class' => ConcertGroup::class,
@@ -42,7 +44,7 @@ class ConcertConcertType extends AbstractType
             ])
             ->add('concertTicketoffice', EntityType::class, [
                 'class' => ConcertTicketOffice::class,
-                'label' => 'Billeterie',
+                'required' => true,
                 'choice_label' => 'name',
                 'multiple' => true
             ])
@@ -51,7 +53,6 @@ class ConcertConcertType extends AbstractType
                 'label' => 'Salle du concert',
                 'choice_label' => 'name'
             ])
-            ->add('save', SubmitType::class)
         ;
     }
 

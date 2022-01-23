@@ -1,19 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvel Artiste{% endblock %}
+{% block title %}Nouveau Groupe !{% endblock %}
 
 {% block body %}
     <div style="margin: 50px auto; width: max-content">
         <div class="card" style="width: 25rem;min-width: max-content">
             <div class="card-body">
-                <h1 class="card-title">Créer un artiste</h1>
+                <h1 class="card-title">Créer un groupe</h1>
 
-                {{ include('artist/_form.html.twig') }}
+                {{ include('group/_form.html.twig') }}
             </div>
         </div>
     </div>
 
 
 
-    <a href="{{ path('artist_index') }}">back to list</a>
+    <a href="{{ path('groups_list') }}">back to list</a>
 {% endblock %}

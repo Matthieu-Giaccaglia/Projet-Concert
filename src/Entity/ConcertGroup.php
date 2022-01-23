@@ -25,14 +25,14 @@ class ConcertGroup
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $description;
 
     /**
      * @ORM\ManyToMany(targetEntity=ConcertArtist::class, inversedBy="concertGroups")
      */
-    private $concertArtist;
+    private $concertArtists;
 
     /**
      * @ORM\OneToMany(targetEntity=ConcertConcert::class, mappedBy="concertGroup", orphanRemoval=true)
@@ -49,7 +49,7 @@ class ConcertGroup
      */
     public function __construct()
     {
-        $this->concertArtist = new ArrayCollection();
+        $this->concertArtists = new ArrayCollection();
         $this->concertConcerts = new ArrayCollection();
     }
 
@@ -103,9 +103,9 @@ class ConcertGroup
     /**
      * @return Collection|ConcertArtist[]
      */
-    public function getConcertArtist(): Collection
+    public function getConcertArtists(): Collection
     {
-        return $this->concertArtist;
+        return $this->concertArtists;
     }
 
     /**
@@ -114,8 +114,8 @@ class ConcertGroup
      */
     public function addConcertArtist(ConcertArtist $concertArtist): self
     {
-        if (!$this->concertArtist->contains($concertArtist)) {
-            $this->concertArtist[] = $concertArtist;
+        if (!$this->concertArtists->contains($concertArtist)) {
+            $this->concertArtists[] = $concertArtist;
         }
 
         return $this;
@@ -127,7 +127,7 @@ class ConcertGroup
      */
     public function removeConcertArtist(ConcertArtist $concertArtist): self
     {
-        $this->concertArtist->removeElement($concertArtist);
+        $this->concertArtists->removeElement($concertArtist);
 
         return $this;
     }

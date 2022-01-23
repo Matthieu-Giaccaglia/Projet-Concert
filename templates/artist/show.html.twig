@@ -1,39 +1,32 @@
 {% extends 'base.html.twig' %}
 
-
-
-{% block title %}ConcertArtist{% endblock %}
+{% block title %}{{ artist.name }}{% endblock %}
 
 {% block body %}
 
+    <div class="title">
+        <h1>{{ artist.name }}</h1>
+    </div>
 
     <div class="container mt-3">
         <div class="row">
-            <div class="col-6" style="margin: auto">
-                <div class="card mb-3" style="max-width: 540px;margin: auto">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img style="width: 180px; height: 240px;" src="{{ asset('img/artists/' ~ concert_artist.imgName) }}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title"><a href="{{ path('artist_show', {id: concert_artist.id}) }}">{{ concert_artist.name }}</a></h5>
-                                <p class="card-text">{{ concert_artist.description }}</p>
-                            </div>
-                        </div>
+            <div class="col-4" style="margin: auto">
+                <img src="{{ asset('img/artists/' ~ artist.imgName) }}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-8">
+                <h2>Son histoire</h2>
+                <p>{{ artist.description }}</p>
+
+                <h2>Son/Ses groupe(s)</h2>
+                <div class="container">
+                    <div class="row">
+                        {% for group in artist.concertGroups %}
+                            <a href="{{ path('groups_show', {id: group.id}) }}">{{ group.name }}</a>
+                        {% endfor %}
                     </div>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <div class="card-footer flex-row" style="display: flex">
-                            <form method="post" action="{{ path('artist_delete', {'id': concert_artist.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ concert_artist.id) }}">
-                                <button type="submit" class="btn link-danger">SUPPRIMER</button>
-                            </form>
-                            <a href="{{ path('artist_edit', {'id': concert_artist.id}) }}" class="btn btn-primary" style="margin-left: auto">EDITER</a>
-                        </div>
-                    {% endif %}
+
                 </div>
             </div>
-
         </div>
     </div>
 

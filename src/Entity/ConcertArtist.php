@@ -26,12 +26,12 @@ class ConcertArtist
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=ConcertGroup::class, mappedBy="concertArtist")
+     * @ORM\ManyToMany(targetEntity=ConcertGroup::class, mappedBy="concertArtists")
      */
     private $concertGroups;
 
@@ -112,5 +112,9 @@ class ConcertArtist
         $this->imgName = $imgName;
 
         return $this;
+    }
+
+    public function __toString() {
+        return $this->name;
     }
 }

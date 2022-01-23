@@ -14,6 +14,7 @@ nav {
 }
 
 .footer {
+    z-index: 1033;
     padding-top: 20px;
     color: #FFF;
 }
@@ -54,6 +55,7 @@ nav {
 }
 
 .title {
+    margin-top: 20px;
     margin-bottom: 3rem;
     text-align: center;
 }
@@ -94,4 +96,37 @@ nav {
 
 .group-separator-2 {
     height: 15vh;
+}
+
+.card-artist {
+    max-width: 540px;
+    margin: auto;
+}
+
+.card-artist img {
+    width: 180px;
+    height: 240px;
+}
+
+.card-artist .card-body {
+    max-height: 240px;
+    overflow: scroll;
+}
+
+.card-groups {
+    width: 18rem;
+    margin: auto;
+}
+
+.card-groups .card-body {
+    height: 235px;
+    overflow: scroll;
+}
+
+.card-footer {
+    display: flex;
+}
+
+.card-footer a {
+    margin-left: auto;
 }

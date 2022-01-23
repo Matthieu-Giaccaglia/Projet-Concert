@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer Un Groupe{% endblock %}
+
+{% block body %}
+
+    <div style="margin: 50px auto; width: max-content">
+        <div class="card" style="width: 25rem;min-width: max-content">
+            <div class="card-body">
+                <h1 class="card-title">Éditer un groupe</h1>
+
+                {{ include('group/_form.html.twig', {'button_label': 'Update'}) }}
+            </div>
+        </div>
+        <a href="{{ path('groups_list') }}">back to list</a>
+    </div>
+
+
+{% endblock %}
