@@ -21,7 +21,7 @@
                 <div class="container">
                     <div class="row">
                         {% for group in artist.concertGroups %}
-                            <a href="{{ path('groups_show', {id: group.id}) }}">{{ group.name }}</a>
+                            <a href="{{ path('group_show', {id: group.id}) }}">{{ group.name }}</a>
                         {% endfor %}
                     </div>
 

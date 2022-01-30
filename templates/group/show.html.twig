@@ -60,22 +60,15 @@
                             {% for concert in concerts %}
                                 <div class="col-6" style="margin: auto">
                                     <div class="card mb-3" style="max-width: 540px;margin: auto">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img style="width: 180px; height: 240px;" src="{{ asset('img/artists/' ~ concert.imgName) }}" class="img-fluid rounded-start" alt="...">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-                                                    <p class="card-text">Début : {{ concert.datetimeBegin | date('d-m-Y à h-i') }}</p>
-                                                    <p class="card-text">Fin : {{ concert.datetimeEnd | date('d-m-Y à h-i') }}</p>
-                                                    <p class="card-text">Salle : {{ concert.concertHall.name }}</p>
-                                                    <p class="card-text">Places : {{ concert.nbTicket }}</p>
-                                                    <p class="card-text">Organisateur : {{ concert.concertOrganizer.name }}</p>
-                                                </div>
-                                            </div>
+                                        <div class="card-body">
+                                            <p class="card-text">Début : {{ concert.datetimeBegin | date('d-m-Y à h-i') }}</p>
+                                            <p class="card-text">Fin : {{ concert.datetimeEnd | date('d-m-Y à h-i') }}</p>
+                                            <p class="card-text">Salle : {{ concert.concertHall.name }}</p>
+                                            <p class="card-text">Places : {{ concert.nbTicket }}</p>
+                                            <p class="card-text">Organisateur : {{ concert.concertOrganizer.name }}</p>
+                                            <a href="{{ path('concert_show', {id : concert.id}) }}" class="btn-primary btn">Voir</a>
                                         </div>
                                     </div>
-
                                 </div>
                             {% endfor %}
                         </div>
@@ -86,13 +79,9 @@
 
         </div>
 
-
-
-
         <div class="group-separator-2"></div>
 
     </div>
-
 
 
 {% endblock %}

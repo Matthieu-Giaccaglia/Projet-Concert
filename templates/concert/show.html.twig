@@ -9,7 +9,7 @@
     <div class="card" style="width: 50%; margin: 20px auto">
         <img src="{{ asset('img/groups/'  ~ concert.concertGroup.imgName) }}" class="card-img-top" alt="...">
         <div class="card-body">
-            <h2 class="card-title">Concert de <a style="text-decoration: none" href="{{ path('groups_show', {id:concert.concertGroup.id}) }}">{{ concert.concertGroup.name }}</a> </h2>
+            <h2 class="card-title">Concert de <a style="text-decoration: none" href="{{ path('group_show', {id:concert.concertGroup.id}) }}">{{ concert.concertGroup.name }}</a> </h2>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">

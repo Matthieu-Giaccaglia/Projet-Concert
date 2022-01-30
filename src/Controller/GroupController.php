@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ConcertConcert;
 use App\Entity\ConcertGroup;
 use App\Form\ConcertGroupType;
+use App\Repository\ConcertGroupRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,11 +21,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupController extends AbstractController
 {
     /**
-     * Affiche tous les groupes.
+     * Show list of groups for regular user.
      *
-     * @Route("/", name="groups_list")
+     * @param ManagerRegistry $doctrine
+     * @return Response
+     *
+     * @Route("", name="group_index")
      */
-    public function groupsAction(ManagerRegistry $doctrine): Response
+    public function indexAction(ManagerRegistry $doctrine): Response
     {
         $groups = $doctrine->getRepository(ConcertGroup::class)->findAll();
 
@@ -40,10 +44,63 @@ class GroupController extends AbstractController
     }
 
     /**
+     * Show list of groups for admin.
+     *
+     * @param ConcertGroupRepository $groupRepository
+     * @return Response
+     *
+     * @Route("/list", name="group_list")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function listAction(ConcertGroupRepository $groupRepository): Response
+    {
+        return $this->render('group/list.html.twig', [
+            'groups' => $groupRepository->findAll()
+        ]);
+    }
+
+    /**
+     * Show information of a group.
+     *
+     * @param ManagerRegistry $doctrine
+     * @param int $id
+     * @return Response
+     *
+     * @Route("/{id}", name="group_show", requirements={"id"="\d+"})
+     */
+    public function showAction(ManagerRegistry $doctrine, int $id): Response
+    {
+        $group = $doctrine->getRepository(ConcertGroup::class)->find($id);
+        $concerts = $doctrine->getRepository(ConcertConcert::class)->getNextGroupConcert($id);
+
+        if(!$group){
+            throw $this->createNotFoundException(
+                'Aucun groupe trouvé !'
+            );
+        }
+
+        $artists = $group->getConcertArtists();
+
+        return $this->render('group/show.html.twig', [
+            'controller_name' => 'GroupController',
+            'group' => $group,
+            'artists' => $artists,
+            'concerts' => $concerts
+        ]);
+    }
+
+    /**
+     * To create a new groupe
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param FileUploader $fileUploader
+     * @return Response
+     *
      * @Route("/new", name="group_new", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function new(Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
+    public function newAction(Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
         $concertGroup = new ConcertGroup();
         $form = $this->createForm(ConcertGroupType::class, $concertGroup);
@@ -70,7 +127,7 @@ class GroupController extends AbstractController
             $entityManager->persist($concertGroup);
             $entityManager->flush();
 
-            return $this->redirectToRoute('groups_list', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('group_show', ['id'=>$concertGroup->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('group/new.html.twig', [
@@ -80,36 +137,18 @@ class GroupController extends AbstractController
     }
 
     /**
-     * Affiche un groupe en particulier.
+     * To edit a group.
      *
-     * @Route("/{id}", name="groups_show")
-     */
-    public function groupAction(ManagerRegistry $doctrine, int $id): Response
-    {
-        $group = $doctrine->getRepository(ConcertGroup::class)->find($id);
-        $concerts = $doctrine->getRepository(ConcertConcert::class)->getNextGroupConcert($id);
-
-        if(!$group){
-            throw $this->createNotFoundException(
-                'Aucun groupe trouvé !'
-            );
-        }
-
-        $artists = $group->getConcertArtists();
-
-        return $this->render('group/group.html.twig', [
-            'controller_name' => 'GroupController',
-            'group' => $group,
-            'artists' => $artists,
-            'concerts' => $concerts
-        ]);
-    }
-
-    /**
-     * @Route("/edit/{id}", name="group_edit", methods={"GET", "POST"})
+     * @param ConcertGroup $concertGroup
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param FileUploader $fileUploader
+     * @return Response
+     *
+     * @Route("/{id}/edit", name="group_edit", requirements={"id"="\d+"}, methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(ConcertGroup $concertGroup, Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
+    public function editAction(ConcertGroup $concertGroup, Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
 
         $form = $this->createForm(ConcertGroupType::class, $concertGroup);
@@ -137,7 +176,7 @@ class GroupController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('groups_list', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('group_show', ['id'=>$concertGroup->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('group/edit.html.twig', [
@@ -147,10 +186,17 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="group_delete", methods={"POST"})
+     * To delete a group.
+     *
+     * @param Request $request
+     * @param ConcertGroup $concertGroup
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     *
+     * @Route("/{id}/delete", name="group_delete", requirements={"id"="\d+"}, methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, ConcertGroup $concertGroup, EntityManagerInterface $entityManager): Response
+    public function deleteAction(Request $request, ConcertGroup $concertGroup, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$concertGroup->getId(), $request->request->get('_token'))) {
             unlink('img/groups/' . $concertGroup->getImgName());
@@ -158,6 +204,6 @@ class GroupController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('groups_list', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('group_index', [], Response::HTTP_SEE_OTHER);
     }
 }

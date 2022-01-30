@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArtistController extends AbstractController
 {
     /**
-     * @Route("/", name="artist_index", methods={"GET"})
+     * @Route("", name="artist_index", methods={"GET"})
      */
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -88,7 +88,7 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="artist_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="artist_edit", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function edit(ConcertArtist $concertArtist, Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
@@ -129,7 +129,7 @@ class ArtistController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="artist_delete", methods={"POST"})
+     * @Route("/{id}/delete", name="artist_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, ConcertArtist $concertArtist, EntityManagerInterface $entityManager): Response

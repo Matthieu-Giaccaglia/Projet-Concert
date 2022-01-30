@@ -16,14 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ConcertController extends AbstractController
 {
 
-
     /**
      * Show home page.
      *
      * @param ManagerRegistry $managerRegistry
      * @return Response
      *
-     * @Route("/", name="concert_home")
+     * @Route("", name="concert_home")
      */
     public function homeAction(ManagerRegistry  $managerRegistry): Response
     {
@@ -36,6 +35,9 @@ class ConcertController extends AbstractController
 
     /**
      * Show list of concerts for regular user.
+     *
+     * @param ConcertConcertRepository $concertRepository
+     * @return Response
      *
      * @Route("/concert", name="concert_index")
      */
@@ -50,6 +52,9 @@ class ConcertController extends AbstractController
     /**
      * Show list of concerts for admin.
      *
+     * @param ConcertConcertRepository $concertRepository
+     * @return Response
+     *
      * @Route("/concert/list", name="concert_list")
      * @IsGranted("ROLE_ADMIN")
      */
@@ -62,6 +67,9 @@ class ConcertController extends AbstractController
 
     /**
      * Show information of a concert.
+     *
+     * @param ConcertConcert $concert
+     * @return Response
      *
      * @Route("/concert/{id}", name="concert_show", requirements={"id"="\d+"})
      */
@@ -76,10 +84,15 @@ class ConcertController extends AbstractController
     /**
      * To edit a concert.
      *
+     * @param Request $request
+     * @param ConcertConcert $concertConcert
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     *
      * @Route("/concert/{id}/edit", name="concert_edit", requirements={"id"="\d+"}, methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, ConcertConcert $concertConcert, EntityManagerInterface $entityManager): Response
+    public function editAction(Request $request, ConcertConcert $concertConcert, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ConcertConcertType::class, $concertConcert);
         $form->handleRequest($request);
@@ -100,9 +113,11 @@ class ConcertController extends AbstractController
      *
      * @param Request $request
      * @return Response
+     *
      * @Route("/concert/new", name="concert_new")
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function createConcert(Request $request): Response
+    public function newAction(Request $request): Response
     {
         $show = new ConcertConcert();
 
@@ -126,16 +141,23 @@ class ConcertController extends AbstractController
 
 
     /**
-     * To delete a concert.
+     * To delete a group.
      *
-     * @Route("/concert/{id}/delete", name="concert_delete", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param ConcertConcert $concertConcert
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     *
+     * @Route("/concert/{id}/delete", name="concert_delete", requirements={"id"="\d+"}, methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, ConcertConcert $concert): Response
+    public function deleteAction(Request $request, ConcertConcert $concertConcert, EntityManagerInterface $entityManager): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($concert);
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$concertConcert->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($concertConcert);
+            $entityManager->flush();
+        }
 
-        return $this->redirectToRoute('concert_list');
+        return $this->redirectToRoute('concert_list', [], Response::HTTP_SEE_OTHER);
     }
 }

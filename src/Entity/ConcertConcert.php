@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ConcertConcertRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -58,11 +59,6 @@ class ConcertConcert
     private $concertHall;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $imgName;
-
-    /**
      * ConcertConcert constructor.
      */
     public function __construct()
@@ -98,18 +94,18 @@ class ConcertConcert
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getDatetimeBegin(): ?\DateTimeInterface
+    public function getDatetimeBegin(): ?DateTimeInterface
     {
         return $this->datetimeBegin;
     }
 
     /**
-     * @param \DateTimeInterface $datetimeBegin
+     * @param DateTimeInterface $datetimeBegin
      * @return $this
      */
-    public function setDatetimeBegin(\DateTimeInterface $datetimeBegin): self
+    public function setDatetimeBegin(DateTimeInterface $datetimeBegin): self
     {
         $this->datetimeBegin = $datetimeBegin;
 
@@ -117,18 +113,18 @@ class ConcertConcert
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getDatetimeEnd(): ?\DateTimeInterface
+    public function getDatetimeEnd(): ?DateTimeInterface
     {
         return $this->datetimeEnd;
     }
 
     /**
-     * @param \DateTimeInterface $datetimeEnd
+     * @param DateTimeInterface $datetimeEnd
      * @return $this
      */
-    public function setDatetimeEnd(\DateTimeInterface $datetimeEnd): self
+    public function setDatetimeEnd(DateTimeInterface $datetimeEnd): self
     {
         $this->datetimeEnd = $datetimeEnd;
 
@@ -220,18 +216,6 @@ class ConcertConcert
     public function setConcertHall(?ConcertHall $concertHall): self
     {
         $this->concertHall = $concertHall;
-
-        return $this;
-    }
-
-    public function getImgName(): ?string
-    {
-        return $this->imgName;
-    }
-
-    public function setImgName(?string $imgName): self
-    {
-        $this->imgName = $imgName;
 
         return $this;
     }
