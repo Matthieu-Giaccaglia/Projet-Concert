@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="title">
+        <h1>Polamo</h1>
+    </div>
+
+    <div class="group-desc">
+        <div class="">
+            <h1>Qui sommes-nous ?</h1>
+        </div>
+
+        <div class="mt-3" style="text-align: justify">
+            <p>
+                Polamo est une scène de musiques de Montpellier. De nombreux artistes viennent faire des concerts dans nos salles.
+                Retrouvez vos groupes préférés sur notre site et regardez quand leur prochains concerts seront disponibles !
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices vel mi vitae consectetur. Nullam et velit interdum, condimentum risus quis, ornare odio. Curabitur et cursus nibh. Suspendisse pretium maximus viverra. Phasellus ut vestibulum enim. Curabitur a pharetra nisi. Curabitur cursus orci mi. Nulla nec ante et dolor dignissim vehicula vitae vitae dolor.
+            </p>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices vel mi vitae consectetur. Nullam et velit interdum, condimentum risus quis, ornare odio. Curabitur et cursus nibh. Suspendisse pretium maximus viverra. Phasellus ut vestibulum enim. Curabitur a pharetra nisi. Curabitur cursus orci mi. Nulla nec ante et dolor dignissim vehicula vitae vitae dolor.
+
+                Suspendisse arcu augue, malesuada vitae dictum et, suscipit eget augue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed imperdiet libero euismod mauris egestas dictum. Aenean bibendum enim diam, a aliquam lectus interdum vitae. Praesent dui elit, vulputate sit amet augue ac, sagittis fermentum mauris. Sed consequat tristique justo nec tincidunt. Integer semper felis ut tristique ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec consectetur dapibus eros, vel ultrices est efficitur ut. Phasellus at urna fermentum, porta libero et, scelerisque mi. Ut suscipit sed orci non congue. Etiam non nisl eu ante faucibus posuere eget ut quam. Proin vel finibus arcu.
+
+                Pellentesque vitae nisl in dui pretium faucibus. Quisque tristique malesuada risus, non tempor nunc suscipit at. Nullam tristique massa eu nulla pharetra consequat. Aliquam eget hendrerit nisl, sed laoreet mauris. Curabitur sollicitudin turpis magna, ac vulputate odio porttitor in. Vestibulum et ultrices felis, a tempor mauris. Vestibulum nec mi quis sem elementum rhoncus quis a ante. Donec eu congue neque. Nam vehicula, velit non sollicitudin imperdiet, libero ex malesuada mi, ac gravida ex nibh in nulla. Suspendisse bibendum lectus metus, pulvinar varius diam suscipit et. Proin cursus libero vel nisl convallis venenatis. Morbi porttitor tellus a venenatis eleifend.
+
+                Aenean lorem dui, tincidunt pretium libero sed, gravida cursus libero. Ut blandit ex magna, at luctus orci iaculis sit amet. Nam lacinia urna in elementum sagittis. Sed vitae venenatis turpis. Aenean consequat lorem at ornare posuere. Mauris scelerisque pretium risus, at laoreet est euismod nec. Sed vitae mattis arcu. Pellentesque a erat enim. Curabitur faucibus eros non pretium semper. Donec convallis lacinia pharetra. Suspendisse potenti. Phasellus vitae massa eu est posuere tincidunt. Pellentesque pretium iaculis est eu pellentesque. Ut vehicula odio id vestibulum placerat.
+
+                Nullam efficitur commodo vulputate. Ut vulputate, metus et dapibus cursus, ante nulla lacinia neque, nec dapibus purus justo eu enim. Fusce justo nibh, mattis in leo vel, mollis pretium risus. Quisque a enim sit amet enim gravida venenatis. Aenean sit amet augue pretium, consectetur enim eget, ullamcorper sem. Nulla eu imperdiet ipsum, in semper odio. Etiam sit amet tellus turpis. Quisque id consectetur ante.
+            </p>
+        </div>
+    </div>
+
+    <div class="group-desc">
+        <div class="mt-2">
+            <h1>Les Prochains Concerts</h1>
+        </div>
+
+        {% if concerts is empty %}
+            <p>Aucun concert prochainement, n'hésitez pas à revenir de temps en temps !</p>
+        {% else %}
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% set i = 0 %}
+                {% for concert in concerts %}
+
+                    {% if i == 0 %}
+                        {% set active = 'active' %}
+                    {% else %}
+                        {% set active = '' %}
+                    {% endif %}
+
+                        <div class="carousel-item {{ active }}">
+                            <a href="{{ path('concert_show', { id: concert.id }) }}">
+                                <img src="{{ asset('img/groups/' ~ concert.concertGroup.imgName) }}" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block group-desc text-black" style="width: auto">
+                                    <h5>{{ concert.concertGroup.name }}</h5>
+                                    <p>Début : {{ concert.datetimeBegin | date('d-m-Y à h-i') }}</p>
+                                    <p>Fin : {{ concert.datetimeEnd | date('d-m-Y à h-i') }}</p>
+                                </div>
+                            </a>
+
+                    </div>
+                    {% set i = i + 1 %}
+                    {{ i }}
+                {% endfor %}
+
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

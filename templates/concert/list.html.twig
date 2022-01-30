@@ -4,6 +4,7 @@
 
     <div class="title">
         <h1>Liste des concerts</h1>
+        <a class="btn btn-secondary" href="{{ path('concert_new') }}">Nouveau concert</a>
     </div>
 
     <div class="container">
@@ -13,15 +14,14 @@
                     <td>Groupe</td>
                     <td>Nombre de place</td>
                     <td>Date</td>
-                    <td>Editer</td>
-                    <td>Supprimer</td>
+                    <td>Action</td>
                 </tr>
             </thead>
             <tbody>
             {% for concert in concerts %}
                 <tr>
                     <td>
-                        <a href="{{ path('groups_show', {id: concert.concertGroup.id}) }}">{{ concert.concertGroup.name }}</a>
+                        {{ concert.concertGroup.name }}
                     </td>
                     <td>
                         {{ concert.nbTicket }}
@@ -30,10 +30,9 @@
                         {{ concert.dateTimeBegin | date('d-m-Y') }}
                     </td>
                     <td>
-                        <a href="{{ path('concert_edit', {id: concert.id}) }}" class="btn btn-primary">EDITER</a>
-                    </td>
-                    <td>
-                        <a href="{{ path('concert_delete', {id: concert.id}) }}" class="btn btn-danger">SUPPRIMER</a>
+                        <a href="{{ path('concert_show', {id: concert.id}) }}" class="">AFFICHER</a>,
+                        <a href="{{ path('concert_edit', {id: concert.id}) }}" class="">EDITER</a>,
+                        <a href="{{ path('concert_delete', {id: concert.id}) }}" class="">SUPPRIMER</a>
                     </td>
                 </tr>
             {% endfor %}

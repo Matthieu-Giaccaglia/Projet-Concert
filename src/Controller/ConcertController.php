@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ConcertConcert;
 use App\Form\ConcertConcertType;
+use App\Repository\ConcertConcertRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -17,36 +18,65 @@ class ConcertController extends AbstractController
 
 
     /**
+     * Show home page.
+     *
      * @param ManagerRegistry $managerRegistry
      * @return Response
      *
-     * @Route("/", name="concert_index")
+     * @Route("/", name="concert_home")
      */
-    public function indexAction(ManagerRegistry  $managerRegistry): Response
+    public function homeAction(ManagerRegistry  $managerRegistry): Response
     {
         $concerts = $managerRegistry->getRepository(ConcertConcert::class)->getNextConcert();
 
-        return $this->render('concert/index.html.twig',[
+        return $this->render('concert/home.html.twig',[
             'concerts' => $concerts
+        ]);
+    }
+
+    /**
+     * Show list of concerts for regular user.
+     *
+     * @Route("/concert", name="concert_index")
+     */
+    public function indexAction(ConcertConcertRepository $concertRepository): Response
+    {
+        return $this->render('concert/index.html.twig', [
+            'concerts' => $concertRepository->getOrderByDateDESC()
         ]);
     }
 
 
     /**
+     * Show list of concerts for admin.
+     *
      * @Route("/concert/list", name="concert_list")
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function listAction(ManagerRegistry $managerRegistry): Response
+    public function listAction(ConcertConcertRepository $concertRepository): Response
+    {
+        return $this->render('concert/list.html.twig', [
+            'concerts' => $concertRepository->findAll()
+        ]);
+    }
+
+    /**
+     * Show information of a concert.
+     *
+     * @Route("/concert/{id}", name="concert_show", requirements={"id"="\d+"})
+     */
+    public function showAction(ConcertConcert $concert): Response
     {
 
-        $concerts = $managerRegistry->getRepository(ConcertConcert::class)->findAll();
-
-        return $this->render('concert/list.html.twig', [
-            'concerts' => $concerts
+        return $this->render('concert/show.html.twig', [
+            'concert' => $concert
         ]);
     }
 
     /**
-     * @Route("/concert/edit/{id}", name="concert_edit", methods={"GET", "POST"})
+     * To edit a concert.
+     *
+     * @Route("/concert/{id}/edit", name="concert_edit", requirements={"id"="\d+"}, methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, ConcertConcert $concertConcert, EntityManagerInterface $entityManager): Response
@@ -66,6 +96,7 @@ class ConcertController extends AbstractController
     }
 
     /**
+     * To create a new concert.
      *
      * @param Request $request
      * @return Response
@@ -95,7 +126,9 @@ class ConcertController extends AbstractController
 
 
     /**
-     * @Route("/concert/delete/{id}", name="concert_delete")
+     * To delete a concert.
+     *
+     * @Route("/concert/{id}/delete", name="concert_delete", requirements={"id"="\d+"})
      */
     public function delete(Request $request, ConcertConcert $concert): Response
     {

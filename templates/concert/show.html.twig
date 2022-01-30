@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Concert de {{ concert.concertGroup.name }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="card" style="width: 50%; margin: 20px auto">
+        <img src="{{ asset('img/groups/'  ~ concert.concertGroup.imgName) }}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h2 class="card-title">Concert de <a style="text-decoration: none" href="{{ path('groups_show', {id:concert.concertGroup.id}) }}">{{ concert.concertGroup.name }}</a> </h2>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <h3 class="card-title">Lieu</h3>
+                <p class="card-text">
+                    Polamo en {{ concert.concertHall.name }}.
+                </p>
+            </li>
+            <li class="list-group-item">
+                <h3 class="card-title">Les dates</h3>
+                <ul>
+                    <li>Début : {{ concert.datetimeBegin| date('d-m-Y à h-i') }}</li>
+                    <li>Fin : {{ concert.datetimeEnd| date('d-m-Y à h-i') }}</li>
+                </ul>
+            </li>
+            <li class="list-group-item">
+                <h3 class="card-title">Billeterie(s)</h3>
+                {% for ticketoffice in concert.concertTicketoffice %}
+                    <button href="#" class="btn btn-primary">{{ ticketoffice.name }}</button>
+                {% endfor %}
+                <p>
+                    <i>{{ concert.nbTicket }} tickets en ventes. Réservez-vite !</i>
+                </p>
+            </li>
+            <li class="list-group-item">
+                <h3 class="card-title">Organisé par {{ concert.concertOrganizer.name }}</h3>
+            </li>
+        </ul>
+    </div>
+
+{% endblock %}
+
+
+

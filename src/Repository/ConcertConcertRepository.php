@@ -56,6 +56,21 @@ class ConcertConcertRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * Get the next concert of specific group.
+     *
+     * @return ConcertConcert[] Returns an array of ConcertConcert objects
+     */
+    public function getOrderByDateDESC(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.datetimeBegin', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
     // /**
     //  * @return ConcertConcert[] Returns an array of ConcertConcert objects
     //  */
