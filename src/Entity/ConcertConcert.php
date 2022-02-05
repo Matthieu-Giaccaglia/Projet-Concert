@@ -36,7 +36,7 @@ class ConcertConcert
     private $datetimeEnd;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ConcertGroup::class, inversedBy="concert_hall")
+     * @ORM\ManyToOne(targetEntity=ConcertGroup::class, inversedBy="concertConcerts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $concertGroup;
