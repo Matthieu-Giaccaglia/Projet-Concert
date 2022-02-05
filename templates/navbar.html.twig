@@ -26,7 +26,9 @@
                     <li><a class="dropdown-item" href="{{ path('concert_list') }}">Liste des concerts</a></li>
                     <li><a class="dropdown-item" href="{{ path('group_list') }}">Liste des groupes</a></li>
                     <li><a class="dropdown-item" href="{{ path('artist_list') }}">Liste des artistes</a></li>
-                    <li><a class="dropdown-item" href="{{ path('user_list') }}">Liste des utilisateurs</a></li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li><a class="dropdown-item" href="{{ path('user_list') }}">Liste des utilisateurs</a></li>
+                    {% endif %}
                 </ul>
             </li>
             {% endif %}

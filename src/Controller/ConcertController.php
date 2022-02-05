@@ -27,7 +27,6 @@ class ConcertController extends AbstractController
     public function homeAction(ManagerRegistry  $managerRegistry): Response
     {
         $concerts = $managerRegistry->getRepository(ConcertConcert::class)->getNextConcert();
-
         return $this->render('concert/home.html.twig',[
             'concerts' => $concerts
         ]);

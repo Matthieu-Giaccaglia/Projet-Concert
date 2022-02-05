@@ -127,7 +127,7 @@ class UserController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('user_list', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
@@ -145,7 +145,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_list', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/roles.html.twig', [
