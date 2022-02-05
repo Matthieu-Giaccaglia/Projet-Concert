@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ConcertArtist;
 use App\Form\ConcertArtistType;
+use App\Repository\ConcertArtistRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,9 +20,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArtistController extends AbstractController
 {
     /**
+     * Show list of artists for regular user
+     *
+     * @param ManagerRegistry $doctrine
+     * @return Response
+     *
      * @Route("", name="artist_index", methods={"GET"})
      */
-    public function index(ManagerRegistry $doctrine): Response
+    public function indexAction(ManagerRegistry $doctrine): Response
     {
 
         $artists = $doctrine->getRepository(ConcertArtist::class)->findAll();
@@ -38,6 +44,45 @@ class ArtistController extends AbstractController
 
 
     /**
+     * Show list of groups for admin.
+     *
+     * @param ConcertArtistRepository $artistRepository
+     * @return Response
+     *
+     * @Route("/list", name="artist_list")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function listAction(ConcertArtistRepository $artistRepository): Response
+    {
+        return $this->render('artist/list.html.twig', [
+            'artists' => $artistRepository->findAll()
+        ]);
+    }
+
+    /**
+     * Show information of an artist.
+     *
+     * @param ConcertArtist $concertArtist
+     * @return Response
+     *
+     * @Route("/{id}", name="artist_show", methods={"GET"})
+     */
+    public function show(ConcertArtist $concertArtist): Response
+    {
+        return $this->render('artist/show.html.twig', [
+            'artist' => $concertArtist,
+        ]);
+    }
+
+
+    /**
+     * To create a new artist.
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param FileUploader $fileUploader
+     * @return Response
+     *
      * @Route("/new", name="artist_new", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
@@ -68,7 +113,7 @@ class ArtistController extends AbstractController
             $entityManager->persist($concertArtist);
             $entityManager->flush();
 
-            return $this->redirectToRoute('artist_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('artist_show', ['id'=>$concertArtist->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('artist/new.html.twig', [
@@ -77,17 +122,16 @@ class ArtistController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="artist_show", methods={"GET"})
-     */
-    public function show(ConcertArtist $concertArtist): Response
-    {
-        return $this->render('artist/show.html.twig', [
-            'artist' => $concertArtist,
-        ]);
-    }
 
     /**
+     * To edit an artist.
+     *
+     * @param ConcertArtist $concertArtist
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param FileUploader $fileUploader
+     * @return Response
+     *
      * @Route("/{id}/edit", name="artist_edit", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
@@ -100,26 +144,25 @@ class ArtistController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $file = $form->get('file')->getData();
+            var_dump($file);
+            if ($file) {
+                $fileName = strtolower($concertArtist->getName());
+                $fileName = $fileUploader->upload($file,'img/artists', $fileName);
 
-            $fileName = strtolower($concertArtist->getName());
+                if(!$fileName) {
+                    return $this->renderForm('artist/edit.html.twig', [
+                        'concert_artist' => $concertArtist,
+                        'form' => $form,
+                    ]);
+                }
 
-
-            $fileName = $fileUploader->upload($file,'img/artists', $fileName);
-
-            if(!$fileName) {
-                return $this->renderForm('artist/new.html.twig', [
-                    'concert_artist' => $concertArtist,
-                    'form' => $form,
-                ]);
+                //unlink('img/artists/' . $concertArtist->getImgName());
+                $concertArtist->setImgName($fileName);
             }
-
-            unlink('img/artists/' . $concertArtist->getImgName());
-            $concertArtist->setImgName($fileName);
-
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('artist_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('artist_show', ['id'=>$concertArtist->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('artist/edit.html.twig', [
@@ -129,17 +172,24 @@ class ArtistController extends AbstractController
     }
 
     /**
+     * To delete a group.
+     *
+     * @param Request $request
+     * @param ConcertArtist $concertArtist
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     *
      * @Route("/{id}/delete", name="artist_delete", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, ConcertArtist $concertArtist, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$concertArtist->getId(), $request->request->get('_token'))) {
-            unlink('/img/artists/' . $concertArtist->getImgName());
+            //unlink('img/artists/' . $concertArtist->getImgName());
             $entityManager->remove($concertArtist);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('artist_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('artist_list', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -1,16 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit ConcertArtist{% endblock %}
+{% block title %}Éditer un artiste{% endblock %}
 
 {% block body %}
-    <h1>Edit ConcertArtist</h1>
 
     <div style="margin: 50px auto; width: max-content">
         <div class="card" style="width: 25rem;min-width: max-content">
             <div class="card-body">
                 <h1 class="card-title">Éditer un artiste</h1>
 
-                {{ include('artist/_form.html.twig', {'button_label': 'Update'}) }}
+                {{ include('artist/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
             </div>
         </div>
         <a href="{{ path('artist_index') }}">back to list</a>

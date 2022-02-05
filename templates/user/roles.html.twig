@@ -9,18 +9,7 @@
             <div class="card-body">
                 {{ form_start(form) }}
 
-                {% if app.user.id == user.id %}
-
-                    <h1 class="card-title">Modifier Votre Compte</h1>
-
-
-                    </div>
-
-                {% else %}
-
-                    <h1 class="card-title">Modifier Le Compte n° {{ user.id }}</h1>
-
-                {% endif %}
+                <h1 class="card-title">Modifier le role du compte n° {{ user.id }}</h1>
 
 
                     <div class="mb-3">
@@ -32,7 +21,6 @@
                             }
                         }) }}
                     </div>
-
 
                 <button class="btn btn-primary" type="submit">
                     MODIFIER L'UTILISATEUR

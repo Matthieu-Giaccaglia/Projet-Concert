@@ -12,6 +12,7 @@ class UserVoter extends Voter
     
     const USER_EDIT = 'user_edit';
     const USER_SHOW = 'user_show';
+    const USER_DELETE = 'user_delete';
     
     protected function supports(string $attribute, $subject): bool
     {
@@ -35,6 +36,8 @@ class UserVoter extends Voter
                 return $this->canShow($subject, $user);
             case self::USER_EDIT:
                 return $this->canEdit($subject, $user);
+            case self::USER_DELETE:
+                return $this->canDelete($subject, $user);
         }
 
         return false;
@@ -48,5 +51,10 @@ class UserVoter extends Voter
     private function canEdit($userShow, UserInterface $user): bool
     {
         return $userShow === $user ;
+    }
+
+    private function canDelete($userShow, UserInterface $user) : bool
+    {
+        return $userShow != $user;
     }
 }

@@ -21,18 +21,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/", name="user_index", methods={"GET"})
+     * To show all users.
+     *
+     * @Route("/", name="user_list", methods={"GET"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/list.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
     }
 
     /**
+     * To create a new user with roles.
+     *
      * @Route("/new", name="user_new", methods={"GET", "POST"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function new(Request $request,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
@@ -51,7 +56,7 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_list', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/new.html.twig', [
@@ -61,11 +66,18 @@ class UserController extends AbstractController
     }
 
     /**
+     * To show a user.
+     *
      * @Route("/{id}", name="user_show", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function show(User $user): Response
     {
-        $this->denyAccessUnlessGranted('user_show', $user);
+
+        $hasAccess = $this->isGranted('ROLE_SUPER_ADMIN');
+
+        if(!$hasAccess)
+            $this->denyAccessUnlessGranted('user_show', $user);
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -73,7 +85,10 @@ class UserController extends AbstractController
     }
 
     /**
+     * To edit a user.
+     *
      * @Route("/{id}/edit", name="user_edit", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, User $user,UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
@@ -97,11 +112,16 @@ class UserController extends AbstractController
     }
 
     /**
+     * To delete an user.
+     *
      * @Route("/{id}", name="user_delete", methods={"POST"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
+
+        $this->denyAccessUnlessGranted('user_delete', $user);
+
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
@@ -111,6 +131,8 @@ class UserController extends AbstractController
     }
 
     /**
+     * To update roles of a user.
+     *
      * @Route("/{id}/roles", name="user_roles", methods={"GET", "POST"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      */

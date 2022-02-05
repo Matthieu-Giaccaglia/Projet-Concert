@@ -24,6 +24,8 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * To register a new user.
+     *
      * @Route("/sign-in", name="app_register")
      */
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppCustomAuthenticator $authenticator, EntityManagerInterface $entityManager): Response

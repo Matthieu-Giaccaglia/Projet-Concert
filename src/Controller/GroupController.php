@@ -158,21 +158,20 @@ class GroupController extends AbstractController
 
             $file = $form->get('file')->getData();
 
-            $fileName = strtolower($concertGroup->getName());
+            if ($file) {
+                $fileName = strtolower($concertGroup->getName());
+                $fileName = $fileUploader->upload($file,'img/groups', $fileName);
 
+                if(!$fileName) {
+                    return $this->renderForm('artist/new.html.twig', [
+                        'group' => $concertGroup,
+                        'form' => $form,
+                    ]);
+                }
 
-            $fileName = $fileUploader->upload($file,'img/groups', $fileName);
-
-            if(!$fileName) {
-                return $this->renderForm('artist/new.html.twig', [
-                    'group' => $concertGroup,
-                    'form' => $form,
-                ]);
+                //unlink('img/groups/' . $concertGroup->getImgName());
+                $concertGroup->setImgName($fileName);
             }
-
-            unlink('img/groups/' . $concertGroup->getImgName());
-            $concertGroup->setImgName($fileName);
-
 
             $entityManager->flush();
 
@@ -199,7 +198,7 @@ class GroupController extends AbstractController
     public function deleteAction(Request $request, ConcertGroup $concertGroup, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$concertGroup->getId(), $request->request->get('_token'))) {
-            unlink('img/groups/' . $concertGroup->getImgName());
+            //unlink('img/groups/' . $concertGroup->getImgName());
             $entityManager->remove($concertGroup);
             $entityManager->flush();
         }
