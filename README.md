@@ -1,7 +1,7 @@
 # Projet Concert
 
 <img src="./public/img/symfony.png" alt="drawing" width="200px"/>
-
+ 
 Projet Concert est un site web sur une salle de concert créé avec le Framework Symfony.
 
 Date : décembre 2022 à début février 2022.
@@ -16,7 +16,7 @@ Projet réalisé lors de mes études en Licence Pro : Assistant de Projet Inform
 
 ## Licence
 
-Copyright [2020] [Birembaut Mateusz, Collé Florian, Deneuville Walter, Giaccaglia Matthieu]
+Copyright [2022] [Giaccaglia Matthieu]
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

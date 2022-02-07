@@ -26,11 +26,9 @@ class ConcertConcertType extends AbstractType
             ])
             ->add('datetimeBegin', DateTimeType::class, [
                 'label' => 'Date et Heure du début',
-                'widget' => 'single_text',
             ])
             ->add('datetimeEnd', DateTimeType::class, [
                 'label' => 'Date et Heure de fin',
-                'widget' => 'single_text'
             ])
             ->add('concertGroup', EntityType::class, [
                 'class' => ConcertGroup::class,

@@ -33,7 +33,6 @@ class ConcertConcertRepository extends ServiceEntityRepository
             ->setParameter('val', $idGroup)
             ->setParameter('dateBegin', date('Y-m-d h:i:s'))
             ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
             ;
